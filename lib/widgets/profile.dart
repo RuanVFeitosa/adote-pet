@@ -1,3 +1,4 @@
+import 'package:adopt_pet/view/homePage.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatelessWidget {
@@ -27,7 +28,7 @@ class Profile extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  "Name",
+                  "Email",
                   style: TextStyle(fontSize: 20),
                 ),
               ],
@@ -40,9 +41,10 @@ class Profile extends StatelessWidget {
                   border: const OutlineInputBorder(),
                   prefixIcon: Container(
                     decoration: const BoxDecoration(
+                      
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
-                    child: const Icon(Icons.account_circle),
+                    child: const Icon(Icons.email),
                   ),
                 ),
               )),
@@ -52,7 +54,7 @@ class Profile extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  "Name",
+                  "Password",
                   style: TextStyle(fontSize: 20),
                 ),
               ],
@@ -68,7 +70,7 @@ class Profile extends StatelessWidget {
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
-                    child: const Icon(Icons.account_circle),
+                    child: const Icon(Icons.lock),
                   ),
                 ),
               )),
@@ -78,7 +80,7 @@ class Profile extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  "Name",
+                  "Confirme Password",
                   style: TextStyle(fontSize: 20),
                 ),
               ],
@@ -94,11 +96,20 @@ class Profile extends StatelessWidget {
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
-                    child: const Icon(Icons.account_circle),
+                    child: const Icon(Icons.lock),
                   ),
                 ),
               )),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Homepage()),
+                    );
+                  },
+                  child: const Text("Create An Account"))
         ],
+        
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:adopt_pet/view/homePage.dart';
 import 'package:flutter/material.dart';
 
 class PagePrincipal extends StatelessWidget {
@@ -26,12 +27,18 @@ class PagePrincipal extends StatelessWidget {
                 ],
               ),
               Container(
-                margin: const EdgeInsets.all(20.0),
-                child: Image.asset("assets/images/Group 74.png", )
-                ),
-                ElevatedButton(
-                  onPressed:  () {}, child: const Text("data")
-                  )
+                  margin: const EdgeInsets.all(20.0),
+                  child: Image.asset(
+                    "assets/images/Group 74.png",
+                  )),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Homepage()),
+                    );
+                  },
+                  child: const Text("data"))
             ],
           ),
         ),
