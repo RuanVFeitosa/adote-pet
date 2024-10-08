@@ -1,27 +1,20 @@
 import 'package:adopt_pet/view/homePage.dart';
-import 'package:adopt_pet/widgets/login.dart';
 import 'package:flutter/material.dart';
 
-class Profile extends StatelessWidget {
-  const Profile({super.key});
+class Login extends StatelessWidget {
+  const Login({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: const Text('Login'),
       ),
       body: Column(
         children: [
           const Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(70.0),
             child: Row(
-              children: [
-                Text(
-                  "Sign Up",
-                  style: TextStyle(fontSize: 30),
-                ),
-              ],
             ),
           ),
           // ------------------------------------------------- Email -------------------------------------------------------
@@ -76,34 +69,7 @@ class Profile extends StatelessWidget {
                   ),
                 ),
               )),
-
-          // ------------------------------------------------- Senha Confirmar -------------------------------------------------------
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Text(
-                  "Confirme Password",
-                  style: TextStyle(fontSize: 20),
-                ),
-              ],
-            ),
-          ),
-
-          Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: TextField(
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  prefixIcon: Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                    child: const Icon(Icons.lock),
-                  ),
-                ),
-              )),
-
+          
           // ------------------------------------------------- Botão Criar -------------------------------------------------------
           Container(
             margin: const EdgeInsets.only(top: 30),
@@ -116,7 +82,7 @@ class Profile extends StatelessWidget {
                 },
                 child: const Padding(
                   padding: EdgeInsets.all(15.0),
-                  child: Text("Create An Account"),
+                  child: Text("Login"),
                 )),
           ),
           Container(
@@ -169,25 +135,6 @@ class Profile extends StatelessWidget {
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-              const Text("Already have an account?"),
-              ElevatedButton(
-                  style: const ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(Colors.white,),
-                    elevation: WidgetStatePropertyAll(0)),
-                  onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Login()),
-                  );
-                },
-                  child: const Text("Login"))
-            ]),
-          )
         ],
       ),
     );
