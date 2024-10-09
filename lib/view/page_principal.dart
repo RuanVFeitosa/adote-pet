@@ -39,7 +39,7 @@ class PagePrincipal extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => const Homepage()),
                     );
                   },
-                  child: const Text("data"))
+                  child: const Text("Home"))
             ],
           ),
         ),
