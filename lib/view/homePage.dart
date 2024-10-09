@@ -1,6 +1,8 @@
 import 'package:adopt_pet/widgets/add_pet.dart'; // Verifique se AddPet está implementado
 import 'package:adopt_pet/widgets/favorites.dart';
 import 'package:adopt_pet/widgets/profile.dart';
+import 'package:adopt_pet/widgets/show_info.dart';
+import 'package:adopt_pet/widgets/sign.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -52,7 +54,7 @@ class _HomepageState extends State<Homepage> {
           Row(
             children: [
               const Padding(
-                padding: EdgeInsets.only(right: 10.0),
+                padding: EdgeInsets.only(right: 8.0),
                 child: Icon(Icons.notifications),
               ),
               IconButton(
@@ -63,7 +65,7 @@ class _HomepageState extends State<Homepage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const Favorites ()),
+                    MaterialPageRoute(builder: (context) => const Favorites()),
                   );
                 },
               ),
@@ -130,19 +132,12 @@ class _HomeContentState extends State<HomeContent> {
       "description": "Um companheiro fiel",
       "location": "São Paulo, 30km"
     },
-    {
-      "image": "assets/images/Gato2.jpg",
-      "title": "Tartaruga",
-      "description": "Uma tartaruga tranquila"
-    },
-    {
-      "image": "assets/images/Hams.png",
-      "title": "Hamster",
-      "description": "Um pequeno roedor",
-    },
   ];
 
   late List<Map<String, String>> currentCarouselItems;
+
+  bool _isGatoSelected = false;
+  bool _isCachorroSelected = false;
 
   @override
   void initState() {
@@ -161,137 +156,176 @@ class _HomeContentState extends State<HomeContent> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            decoration: InputDecoration(
-              labelText: 'Search',
-              border: const OutlineInputBorder(),
-              suffixIcon: Container(
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(130, 115, 104, 253),
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              decoration: InputDecoration(
+                labelText: 'Search',
+                border: const OutlineInputBorder(),
+                suffixIcon: Container(
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(130, 115, 104, 253),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  ),
+                  child: const Icon(Icons.search_outlined),
                 ),
-                child: const Icon(Icons.search_outlined),
               ),
             ),
           ),
-        ),
-        Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Image.asset(
-            "assets/images/Frame 33.png",
-            width: 370,
-            fit: BoxFit.cover,
-          ),
-          const Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Pet Categories",
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                Text(
-                  "More Categories",
-                  style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(130, 115, 104, 253)),
-                ),
-              ],
+          Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Sign()),
+                );
+              },
+              child: Image.asset(
+                "assets/images/Frame 33.png",
+                width: 370,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                  onTap: () => updateCarousel("Gato"),
-                  child: Image.asset("assets/images/Frame 35.png"),
-                ),
-                GestureDetector(
-                  onTap: () => updateCarousel("Cachorro"),
-                  child: Image.asset("assets/images/Dog.png"),
-                ),
-                GestureDetector(
-                  onTap: () => updateCarousel("Tartaruga"),
-                  child: Image.asset("assets/images/Turtle.png"),
-                ),
-                GestureDetector(
-                  onTap: () => updateCarousel("Hamster"),
-                  child: Image.asset("assets/images/Hams.png"),
-                ),
-              ],
+            const Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Pet Categories",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  Text(
+                    "More Categories",
+                    style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(130, 115, 104, 253)),
+                  ),
+                ],
+              ),
             ),
-          ),
-          CarouselSlider(
-            options: CarouselOptions(height: 340.0),
-            items: currentCarouselItems.map((item) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Card(
-                    margin: const EdgeInsets.all(8.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    elevation: 5,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius: const BorderRadius.vertical(
-                              top: Radius.circular(15.0)),
-                          child: Image.asset(
-                            item["image"]!,
-                            width: double.infinity,
-                            height: 200.0,
-                            fit: BoxFit.cover,
-                          ),
+            Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _isGatoSelected = !_isGatoSelected;
+                          _isCachorroSelected = false;
+                        });
+                        updateCarousel("Gato");
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: _isGatoSelected
+                              ? const Color.fromARGB(130, 115, 104, 253)
+                              : Colors.transparent,
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                item["title"]!,
-                                style: const TextStyle(
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold,
+                        child: Image.asset(
+                          "assets/images/icon_cat.png",
+                          width: 30,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _isCachorroSelected = !_isCachorroSelected;
+                          _isGatoSelected = false;
+                        });
+                        updateCarousel("Cachorro");
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: _isCachorroSelected
+                              ? const Color.fromARGB(130, 115, 104, 253)
+                              : Colors.transparent,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Image.asset("assets/images/icon_dog.png",
+                            width: 30, fit: BoxFit.cover),
+                      ),
+                    ),
+                  ],
+                )),
+            CarouselSlider(
+              options: CarouselOptions(height: 340.0),
+              items: currentCarouselItems.map((item) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Card(
+                      margin: const EdgeInsets.all(8.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      elevation: 5,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: const BorderRadius.vertical(
+                                top: Radius.circular(15.0)),
+                            child: Image.asset(
+                              item["image"]!,
+                              width: double.infinity,
+                              height: 200.0,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  item["title"]!,
+                                  style: const TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                              const Icon(Icons.male),
-                            ],
+                                const Icon(Icons.male),
+                              ],
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 4.0),
-                          child: Text(
-                            item["description"]!,
-                            style: const TextStyle(fontSize: 16.0),
+
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8.0, vertical: 4.0),
+                            child: Text(
+                              item["location"] ?? "",
+                              style: const TextStyle(fontSize: 16.0),
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 4.0),
-                          child: Text(
-                            item["location"] ?? "",
-                            style: const TextStyle(fontSize: 16.0),
+                          // Adicione o botão aqui
+                          ElevatedButton(
+                            child: const Text("Ver mais"),
+                            onPressed: () {
+                              // Navegue para a página desejada aqui
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const ShowInfo()),
+                              );
+                            },
                           ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              );
-            }).toList(),
-          )
-        ])
-      ],
+                        ],
+                      ),
+                    );
+                  },
+                );
+              }).toList(),
+            )
+          ])
+        ],
+      ),
     );
   }
 }

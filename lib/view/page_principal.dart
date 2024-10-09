@@ -1,4 +1,5 @@
 import 'package:adopt_pet/view/homePage.dart';
+import 'package:adopt_pet/widgets/profile.dart';
 import 'package:flutter/material.dart';
 
 class PagePrincipal extends StatelessWidget {
@@ -8,7 +9,7 @@ class PagePrincipal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

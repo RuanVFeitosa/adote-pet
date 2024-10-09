@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Favorites extends StatelessWidget {
   const Favorites({super.key});
 
- @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -12,38 +12,50 @@ class Favorites extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Image.asset("assets/images/Gato.png",height: 100,),
-                    const Text('Gato'),
-                  ],
+                Image.asset(
+                  "assets/images/Gato.png",
+                  height: 100,
                 ),
-                const Row(
-                  children: [
-                    Text('Description: Um amigo felino muito fofinho, adote ele'),
+                const SizedBox(width: 10), // Espaçamento entre imagem e texto
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'Gato',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 4), // Espaçamento entre Nome e Sexo
+                    Text(
+                      'Sexo: Masculino',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(height: 4), // Espaçamento entre Sexo e Localização
+                    Text(
+                      'Localização: São Paulo, SP',
+                      style: TextStyle(fontSize: 16),
+                    ),
                   ],
-                ),
-                const Row(
-                  children: [
-                    Text(""),
-                  ],
-                ),
-                const Row(
-                  children: [
-                    Text(""),
-                  ],
-                ),
-                const Divider(
-                  height: 40,
-                  thickness: 2,
-                  indent: 0,
-                  endIndent: 0,
-                  color: Color.fromARGB(255, 255, 187, 0),
                 ),
               ],
             ),
-      )
+            const SizedBox(height: 8), // Espaçamento vertical
+            const Text(
+              'Description: Um amigo felino muito fofinho, adote ele',
+              style: TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 20), // Espaçamento antes do Divider
+            const Divider(
+              height: 40,
+              thickness: 2,
+              color: Color.fromARGB(255, 255, 187, 0),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

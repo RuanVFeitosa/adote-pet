@@ -11,93 +11,66 @@ class AddPet extends StatelessWidget {
       ),
       body: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Text(
-                  "Sign Up",
-                  style: TextStyle(fontSize: 30),
-                ),
-              ],
-            ),
-          ),
           // ------------------------------------------------- Email -------------------------------------------------------
-
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Text(
-                  "Email",
-                  style: TextStyle(fontSize: 20),
-                ),
-              ],
-            ),
-          ),
           Padding(
               padding: const EdgeInsets.all(4.0),
               child: TextField(
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
+                  labelText: 'Name',
                   prefixIcon: Container(
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
-                    child: const Icon(Icons.email),
+                    child: const Icon(Icons.text_fields),
                   ),
                 ),
               )),
 
           // ------------------------------------------------- Senha  -------------------------------------------------------
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Text(
-                  "Password",
-                  style: TextStyle(fontSize: 20),
-                ),
-              ],
-            ),
-          ),
           Padding(
               padding: const EdgeInsets.all(4.0),
               child: TextField(
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
+                  labelText: 'Age',
                   prefixIcon: Container(
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
-                    child: const Icon(Icons.lock),
+                    child: const Icon(Icons.calendar_today),
                   ),
                 ),
               )),
 
           // ------------------------------------------------- Senha Confirmar -------------------------------------------------------
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Text(
-                  "Confirme Password",
-                  style: TextStyle(fontSize: 20),
-                ),
-              ],
-            ),
-          ),
-
           Padding(
               padding: const EdgeInsets.all(4.0),
               child: TextField(
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
+                  labelText: 'Weight',
                   prefixIcon: Container(
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
-                    child: const Icon(Icons.lock),
+                    child: const Icon(Icons.monitor_weight),
+                  ),
+                ),
+              )),
+
+          // ------------------------------------------------- Botão Criar -------------------------------------------------------
+          Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  labelText: 'Sex',
+                  prefixIcon: Container(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                    child: const Icon(Icons.pets),
                   ),
                 ),
               )),
@@ -114,7 +87,7 @@ class AddPet extends StatelessWidget {
                 },
                 child: const Padding(
                   padding: EdgeInsets.all(15.0),
-                  child: Text("Create An Account"),
+                  child: Text("Add Pet"),
                 )),
           ),
         ],
