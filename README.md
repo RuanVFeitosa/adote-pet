@@ -4,6 +4,10 @@ A new Flutter project.
 
 ## Getting Started
 
+FIGMA
+https://www.figma.com/design/wrcUafJjamTqhEB4bUGcvF/UI-KIT---Pet-Adoption-(Community)?m=auto&t=w9HZJV5EmdkCnwvJ-6
+https://www.figma.com/design/Mnx3bZZV220MO78AcqMOjk/Pet-Adoption-(Community)?m=auto&t=w9HZJV5EmdkCnwvJ-6
+
 This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
