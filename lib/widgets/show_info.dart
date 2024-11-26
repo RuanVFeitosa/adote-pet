@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ShowInfo extends StatelessWidget {
-  const ShowInfo({super.key});
+  const ShowInfo({super.key, required Map<String, String> petDetails});
 
   @override
   Widget build(BuildContext context) {

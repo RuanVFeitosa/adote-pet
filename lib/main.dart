@@ -3,6 +3,9 @@ import 'package:adopt_pet/view/page_principal.dart';
 import 'package:adopt_pet/widgets/profile.dart';
 import 'package:flutter/material.dart';
 
+import 'dart:convert' as convert;
+import 'package:http/http.dart' as http;
+
 void main() {
   runApp(const MyApp());
 }

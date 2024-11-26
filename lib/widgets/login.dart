@@ -1,11 +1,29 @@
 import 'package:adopt_pet/view/homePage.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert' as convert;
+
+import 'package:http/http.dart' as http;
+
+
+void _getData() async {
+  var url = Uri.https('https://pet-adopt-dq32j.ondigitalocean.app', '/user/register', {'q': '{http}'}
+  
+  );
+}
 
 class Login extends StatelessWidget {
   const Login({super.key});
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController emailController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
+
+    void login() {
+      print(emailController.text);
+      print(passwordController.text);
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
@@ -33,6 +51,7 @@ class Login extends StatelessWidget {
           Padding(
               padding: const EdgeInsets.all(4.0),
               child: TextField(
+                controller: emailController,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   prefixIcon: Container(
@@ -59,6 +78,7 @@ class Login extends StatelessWidget {
           Padding(
               padding: const EdgeInsets.all(4.0),
               child: TextField(
+                controller: passwordController,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   prefixIcon: Container(
@@ -75,10 +95,7 @@ class Login extends StatelessWidget {
             margin: const EdgeInsets.only(top: 30),
             child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Homepage()),
-                  );
+                  login();
                 },
                 child: const Padding(
                   padding: EdgeInsets.all(15.0),
