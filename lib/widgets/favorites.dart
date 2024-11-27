@@ -21,9 +21,9 @@ class Favorites extends StatelessWidget {
                   height: 100,
                 ),
                 const SizedBox(width: 10), // Espaçamento entre imagem e texto
-                Column(
+                const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
                       'Gato',
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),

@@ -1,25 +1,16 @@
-import 'package:adopt_pet/widgets/add_pet.dart';
+import 'dart:convert';
+
+import 'package:adopt_pet/widgets/add_pet.dart'; // Verifique se AddPet está implementado
 import 'package:adopt_pet/widgets/favorites.dart';
+import 'package:adopt_pet/widgets/pets-home.dart';
 import 'package:adopt_pet/widgets/profile.dart';
 import 'package:adopt_pet/widgets/show_info.dart';
 import 'package:adopt_pet/widgets/sign.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
-
-void main() => runApp(const MyApp());
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Homepage(),
-    );
-  }
-}
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -31,18 +22,19 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   int _selectedIndex = 0;
 
+  // Atualize a lista de widgets para incluir AddPet e AllPets
   static final List<Widget> _widgetOptions = <Widget>[
     const HomeContent(),
-    const AddPet(),
+    const AddPet(), // Página de Adicionar Pets
     const Text(
-      'Index 2: All Pets',
+      'Index 2: All Pets', // Adicione a página de Todos os Pets aqui
       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
     ),
   ];
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      _selectedIndex = index; // Atualize o índice selecionado
     });
   }
 
@@ -93,20 +85,20 @@ class _HomepageState extends State<Homepage> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: 'Home', // Label correta para o item Home
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.add),
-            label: 'Add Pets',
+            label: 'Add Pets', // Label correta para o item Add Pets
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.pets_sharp),
-            label: 'All Pets',
+            label: 'All Pets', // Label correta para o item All Pets
           ),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: const Color.fromARGB(130, 115, 104, 253),
-        onTap: _onItemTapped,
+        onTap: _onItemTapped, // Chama a função para mudar de página
       ),
     );
   }
@@ -120,47 +112,32 @@ class HomeContent extends StatefulWidget {
 }
 
 class _HomeContentState extends State<HomeContent> {
-  List<Map<String, String>> pets = [];
-  bool isLoading = true;
-  bool hasFetched = false; // Flag para verificar se já foi carregado
+  List<Map<String, dynamic>> pets = [];
 
-  @override
-  void initState() {
-    super.initState();
-    if (!hasFetched) {
-      fetchPets();
-    }
-  }
-
-  Future<void> fetchPets() async {
+  void getPets() async {
     var client = http.Client();
     var url = 'https://pet-adopt-dq32j.ondigitalocean.app/pet/pets';
 
     try {
       var response = await client.get(Uri.parse(url));
+      var responseData = jsonDecode(response.body);
 
-      if (response.statusCode == 200) {
-        var jsonResponse = convert.jsonDecode(response.body);
+      print(responseData['pets']);
+
+      for (var element in responseData['pets']) {
         setState(() {
-          pets = List<Map<String, String>>.from(
-            jsonResponse.map((item) => {
-                  "image": item["imageUrl"] ?? "",
-                  "title": item["name"] ?? "",
-                  "description": item["description"] ?? "",
-                  "location": item["location"] ?? "",
-                }),
-          );
-          isLoading = false;
-          hasFetched = true; // Marque como carregado
+          pets.add(element);
         });
-      } else {
-        print("Erro: Código de status não 200: ${response.statusCode}");
+        print(pets.length);
       }
-    } catch (e) {
-      print("Erro ao buscar pets: $e");
     } finally {
       client.close();
     }
+  }
+
+  void initState() {
+    getPets();
+    super.initState();
   }
 
   @override
@@ -184,79 +161,58 @@ class _HomeContentState extends State<HomeContent> {
               ),
             ),
           ),
-          isLoading
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : CarouselSlider(
-                  options: CarouselOptions(height: 340.0),
-                  items: pets.map((item) {
-                    return Builder(
-                      builder: (BuildContext context) {
-                        return Card(
-                          margin: const EdgeInsets.all(8.0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          elevation: 5,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ClipRRect(
-                                borderRadius: const BorderRadius.vertical(
-                                    top: Radius.circular(15.0)),
-                                child: Image.network(
-                                  item["image"]!,
-                                  width: double.infinity,
-                                  height: 200.0,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      item["title"]!,
-                                      style: const TextStyle(
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const Icon(Icons.pets),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8.0, vertical: 4.0),
-                                child: Text(
-                                  item["location"]!,
-                                  style: const TextStyle(fontSize: 16.0),
-                                ),
-                              ),
-                              ElevatedButton(
-                                child: const Text("Ver mais"),
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => ShowInfo(
-                                        petDetails: item,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    );
-                  }).toList(),
+          Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Sign()),
+                );
+              },
+              child: Image.asset(
+                "assets/images/Frame 33.png",
+                width: 370,
+                fit: BoxFit.cover,
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Pet Categories",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  Text(
+                    "More Categories",
+                    style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(130, 115, 104, 253)),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              
+              child: GridView.builder(
+                shrinkWrap: true,
+                primary: false,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: pets.length, //qtd de produtos
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.9,
                 ),
+                itemBuilder: (context, index) {
+                 
+                  List<dynamic> images = pets[index]['images'];
+
+                  return pets_home(name: pets[index]['name'], images: images);
+                },
+              ),
+            ),
+          ])
         ],
       ),
     );
