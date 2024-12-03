@@ -17,8 +17,12 @@ class pets_home extends StatelessWidget {
       child: Container(
         width: 125,
         height: 260,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           color: Colors.white,
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          border: Border.all(
+            color: const Color.fromARGB(130, 115, 104, 253)
+          )
         ),
         child: Column(
         
