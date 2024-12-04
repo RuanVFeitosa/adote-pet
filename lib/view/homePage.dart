@@ -194,7 +194,6 @@ class _HomeContentState extends State<HomeContent> {
               ),
             ),
             Container(
-              
               child: GridView.builder(
                 shrinkWrap: true,
                 primary: false,
@@ -205,10 +204,18 @@ class _HomeContentState extends State<HomeContent> {
                   childAspectRatio: 0.9,
                 ),
                 itemBuilder: (context, index) {
-                 
                   List<dynamic> images = pets[index]['images'];
 
-                  return pets_home(name: pets[index]['name'], images: images);
+                  return PetsHome(
+                    name: pets[index]['name'],
+                    images: pets[index]['images'] != null &&
+                            pets[index]['images'] is List<dynamic> &&
+                            pets[index]['images'].isNotEmpty
+                        ? pets[index]['images']
+                        : [
+                            ''
+                          ], // Retorna uma lista com uma string vazia como fallback
+                  );
                 },
               ),
             ),
